@@ -1,0 +1,22 @@
+{
+  "name": "20220329_nodejs_ecommerce",
+  "version": "1.0.0",
+  "description": "MERN Stack E-Commerce App - MVC pattern",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarcelDurganteDev/20220329_nodejs_ecommerce.git"
+  },
+  "keywords": [
+    "ecommerce"
+  ],
+  "author": "Marcel Durgante Dev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MarcelDurganteDev/20220329_nodejs_ecommerce/issues"
+  },
+  "homepage": "https://github.com/MarcelDurganteDev/20220329_nodejs_ecommerce#readme"
+}
