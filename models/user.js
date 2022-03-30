@@ -52,11 +52,13 @@ userSchema
         return this._password;
     });
 
-userSchema.methods = {
+userSchema
+    .methods = {
     encryptPassword: password => {
         if (!password) return '';
         try {
             return crypto
+                // one of many methods to hash a password
                 .createHmac('sha1', this.salt)
                 .update(password)
                 .digest('hex');
@@ -65,3 +67,5 @@ userSchema.methods = {
         }
     }
 };
+
+module.expoerts = mongoose.model( 'User', userSchema );
