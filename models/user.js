@@ -38,3 +38,30 @@ const userSchema = new mongoose.Schema(
     },
     { timestamps: true }
 );
+
+// virtual field
+
+userSchema
+    .virtual('password')
+    .set(password => {
+        this._password = password;
+        this.salt = uuidv1();
+        this.hashed_password = this.encryptPassword(password);
+    })
+    .get(() => {
+        return this._password;
+    });
+
+userSchema.methods = {
+    encryptPassword: password => {
+        if (!password) return '';
+        try {
+            return crypto
+                .createHmac('sha1', this.salt)
+                .update(password)
+                .digest('hex');
+        } catch (err) {
+            return '';
+        }
+    }
+};
