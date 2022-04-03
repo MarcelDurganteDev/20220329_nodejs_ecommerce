@@ -1,9 +1,9 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken'); //  to generate signed token
-const { expressJwt } = require('express-jwt'); //  for authorization check
+const expressJwt = require('express-jwt'); //  for authorization check
 const { errorHandler } = require('../helpers/dbErrorHandler');
 
-// SIGNUP METHOD
+// SIGN UP METHOD
 
 exports.signup = (req, res) => {
     // console.log('req.body', req.body);
@@ -24,7 +24,7 @@ exports.signup = (req, res) => {
     });
 };
 
-// SIGNIN METHOD
+// SIGN IN METHOD
 
 exports.signin = ( req, res ) => {
     // find the user based on email
@@ -51,3 +51,19 @@ exports.signin = ( req, res ) => {
         return res.json({ token, user: { _id, email, name, role } });
     });
 };
+
+
+// SIGN OUT METHOD
+
+exports.signout = ( req, res ) => {
+    res.clearCookie( 't' );
+    res.json( { message: 'Sign Out success' } );
+};
+
+// REQUIRE SIGN IN METHOD
+
+exports.requireSignIn = expressJwt ({
+    secret: process.env.JWT_SECRET,
+    algorithms: ['HS256'], // added later
+    userProperty: 'auth'
+});

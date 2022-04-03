@@ -25,6 +25,7 @@ mongoose
 // middlewares
 app.use( morgan( 'dev' ) );
 app.use( bodyParser.json() );
+// used in requireSignIn method so it works
 app.use( cookieParser() );
 app.use( expressValidator() );
 
