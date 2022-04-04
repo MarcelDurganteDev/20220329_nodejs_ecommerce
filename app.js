@@ -8,18 +8,23 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 // import routes
+const authRoutes = require('./routes/auth')
 const userRoutes = require('./routes/user')
 
 // app
 const app = express();
 
 // db connection
-mongoose
-    .connect( process.env.DATABASE, {} )
-    .then( () => {
-        console.log( 'DB Connected' );
-    } )
-    .catch( ( err ) => console.log( 'DB error => ', err ) );
+
+mongoose.connect(
+  process.env.MONGO_URI,
+  {useNewUrlParser: true}
+)
+.then(() => console.log('DB Connected'))
+ 
+mongoose.connection.on('error', err => {
+  console.log(`DB connection error: ${err.message}`)
+});
 
 
 // middlewares
@@ -31,6 +36,7 @@ app.use( expressValidator() );
 
 
 // routes middleware
+app.use('/api', authRoutes)
 app.use('/api', userRoutes)
 
 const port = process.env.PORT || 8000;
