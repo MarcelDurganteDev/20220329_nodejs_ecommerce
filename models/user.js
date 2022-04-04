@@ -53,7 +53,7 @@ userSchema
 
 userSchema
     .methods = {
-    authenticate: function ( plainTextPass ) {
+    authenticate: function ( plainText ) {
             return this.encryptPassword( plainText ) === this.hashed_password;
     },
 

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { ObjectId } = mongoose.schema;
+const {ObjectId} = mongoose.Schema;
 
 const productSchema = new mongoose.Schema(
     {
@@ -26,7 +26,7 @@ const productSchema = new mongoose.Schema(
             required: true
         },
         quantity: {
-            type: Number,
+            type: Number
         },
         photo: {
             data: Buffer,
