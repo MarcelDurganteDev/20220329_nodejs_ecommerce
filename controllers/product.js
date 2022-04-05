@@ -4,21 +4,54 @@ const fs = require('fs');
 const Product = require('../models/product');
 const { errorHandler } = require('../helpers/dbErrorHandler');
 
+// get a single product and be able to delete, updated, edit
+exports.productById = function (req, res, next, id) {
+    console.log('dentro productById func');
+    Product.findById(id)
+        // .populate('category')
+        .exec((err, product) => {
+            if (err || !product) {
+                return res.status(400).json({
+                    error: 'Product not found'
+                });
+            }
+            req.product = product;
+            console.log('log de req.product:', req.product);
+            next();
+        });
+        console.log('log productById, findById req: ', req);
+};
+
+exports.read = function (req, res) {
+    if (req.product && req.product.photo == undefined) {
+        req.product.photo = undefined;
+    }
+    return res.json( req.product );
+};
+
 exports.create = (req, res) => {
     let form = new formidable.IncomingForm();
     form.keepExtensions = true;
-    form.parse(req, (err, fields, files) => {
+    form.parse(req, function (err, fields, files) {
         if (err) {
             return res.status(400).json({
                 error: 'Image could not be uploaded'
             });
         }
-
-        const { name, description, price, category, quantity, shipping } = fields;
-        if ( !name || !description || !price || !category || !quantity || !shipping ) {
-            return res.status( 400 ).json( {
+        // Check for all fields
+        const { name, description, price, category, quantity, shipping } =
+            fields;
+        if (
+            !name ||
+            !description ||
+            !price ||
+            !category ||
+            !quantity ||
+            !shipping
+        ) {
+            return res.status(400).json({
                 error: 'All fields are required'
-            })
+            });
         }
 
         let product = new Product(fields);
@@ -38,6 +71,20 @@ exports.create = (req, res) => {
                 });
             }
             res.json(result);
+        });
+    });
+};
+
+exports.remove = (req, res) => {
+    let product = req.product;
+    product.remove(err => {
+        if (err) {
+            return res.status(400).json({
+                error: errorHandler(err)
+            });
+        }
+        res.json( {
+            message: 'Product deleted successfully'
         });
     });
 };
