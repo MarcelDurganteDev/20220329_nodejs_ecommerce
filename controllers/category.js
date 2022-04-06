@@ -70,5 +70,22 @@ exports.remove = ( req, res) => {
     });
 };
 
+// LIST ALL METHOD
+
+exports.list = ( req, res ) => {
+    // The find() method returns all the matching documents in the collection as an array. To find a single document, you can either use the findById() method or the findOne() method:
+    Category.find().exec((err, data) => {
+        if (err) {
+            res.status(400).json({
+                error: errorHandler(err)
+            });
+        }
+        res.json({
+            data,
+            message: 'Cat Found'
+        });
+    });
+};
+
 
 
