@@ -26,6 +26,8 @@ exports.create = ( req, res ) => {
     })
 }
 
+// READ METHOD
+
 exports.read = ( req, res ) => {
     return res.json( req.category );
 };
