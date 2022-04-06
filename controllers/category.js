@@ -41,17 +41,31 @@ exports.read = ( req, res ) => {
 exports.update = ( req, res) => {
     let category = req.category;
     category.name = req.body.name;
-    category.save((err, data) => {
+    category.save(err=> {
         if ( err ) {
-            // console.log('category', req.category)
-            // console.log('body', req.body)
-            // console.log('name', req.body.name)
             res.status(400).json({
                 error: errorHandler(err)
             });
         }
         res.json( {
             message: 'Product Updated Successfully'
+        });
+    });
+};
+
+// DELETE METHOD
+
+exports.remove = ( req, res) => {
+    let category = req.category;
+    category.remove((err, data) => {
+        if ( err ) {
+            res.status(400).json({
+                error: errorHandler(err)
+            });
+        }
+        res.json( {
+            data,
+            message: 'Product Deleted Successfully'
         });
     });
 };

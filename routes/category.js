@@ -12,7 +12,7 @@ const { userById } = require( '../controllers/user' );
 Router.post('/category/create/:userId', requireSignIn, isAuth, isAdmin, create);
 Router.get('/category/:categoryId', read);
 Router.put('/category/:categoryId/:userId', requireSignIn, isAuth, isAdmin, update);
-// Router.delete( '/category/:categoryId/:userId', requireSignIn, isAuth, isAdmin, remove );
+Router.delete( '/category/:categoryId/:userId', requireSignIn, isAuth, isAdmin, remove );
 // Router.get('/categories', list);
 
 Router.param( 'categoryId', categoryById );
