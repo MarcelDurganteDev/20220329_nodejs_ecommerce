@@ -21,15 +21,6 @@ exports.productById = function (req, res, next, id) {
     console.log('log productById, findById req: ', req);
 };
 
-// READ METHOD
-
-exports.read = function (req, res) {
-    if (req.product && req.product.photo == undefined) {
-        req.product.photo = undefined;
-    }
-    return res.json(req.product);
-};
-
 // CREATE METHOD
 
 exports.create = (req, res) => {
@@ -78,20 +69,13 @@ exports.create = (req, res) => {
     });
 };
 
-// DELETE METHOD
+// READ METHOD
 
-exports.remove = (req, res) => {
-    let product = req.product;
-    product.remove(err => {
-        if (err) {
-            return res.status(400).json({
-                error: errorHandler(err)
-            });
-        }
-        res.json({
-            message: 'Product deleted successfully'
-        });
-    });
+exports.read = function (req, res) {
+    if (req.product && req.product.photo == undefined) {
+        req.product.photo = undefined;
+    }
+    return res.json(req.product);
 };
 
 // UPDATE METHOD
@@ -146,3 +130,21 @@ exports.update = (req, res) => {
         });
     });
 };
+
+// DELETE METHOD
+
+exports.remove = (req, res) => {
+    let product = req.product;
+    product.remove(err => {
+        if (err) {
+            return res.status(400).json({
+                error: errorHandler(err)
+            });
+        }
+        res.json({
+            message: 'Product deleted successfully'
+        });
+    });
+};
+
+
