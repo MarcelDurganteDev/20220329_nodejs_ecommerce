@@ -4,8 +4,10 @@ const fs = require('fs');
 const Product = require('../models/product');
 const { errorHandler } = require('../helpers/dbErrorHandler');
 
+// FIND BY ID MIDDLEWARE
+
 // get a single product and be able to delete, updated, edit
-exports.productById = function (req, res, next, id) {
+exports.productById = function ( req, res, next, id ) {
     Product.findById(id)
         // .populate('category')
         .exec((err, product) => {
@@ -147,4 +149,37 @@ exports.remove = (req, res) => {
     });
 };
 
+/**
+ * @desc Show products sorted by most popular/sold and new products. This method returns all the products if no query is passed (if no params are sent).
+ * @todo: by sell = /products?sortBy=sold&order=desc&limit=4
+ * @todo: by arrival = /products?sortBy=createdAt&order=desc&limit=4
+ * @category Array
+ * @param {Array} array The array to process.
+ * @param {number} [size=1] The length of each chunk
+ * @returns {Array} Returns the new array of chunks.
+ * @example
+ */
+
+exports.list = ( ( req, res ) => {
+    // if no order in query (url) returns ascending by default
+    let order = req.query.order ? req.query.order : 'asc';
+    let sortBy = req.query.sortBy ? req.query.sortBy : '_id';
+    let limit = req.query.limit ? req.query.limit : 20;
+
+    Product.find()
+        // diselect product photo from search
+        .select( '-photo' )
+        .populate( 'category' )
+        .sort( [[sortBy, order]] )
+        .limit( limit )
+        // executes the queries based on what is passed in the query (url)
+        .exec( ( err, products ) => {
+            if ( err || !products || []) {
+                return res.status( 400 ).json( {
+                    message: 'No products found'
+                } );
+            }
+            res.send( products )
+        } );
+} );
 
