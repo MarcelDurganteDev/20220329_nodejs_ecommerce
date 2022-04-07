@@ -81,9 +81,8 @@ exports.list = ( req, res ) => {
             });
         }
         res.json({
-            data,
-            message: 'Cat Found'
-        });
+            data
+        } );
     });
 };
 
