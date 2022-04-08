@@ -1,7 +1,6 @@
 const express = require('express');
 const mongoose = require( 'mongoose' );
 const morgan = require( 'morgan' );
-const bodyParser = require( 'body-parser')
 const cookieParser = require( 'cookie-parser' )
 const expressValidator = require('express-validator')
 const dotenv = require('dotenv');
@@ -31,13 +30,15 @@ mongoose.connection.on('error', err => {
 
 // middlewares
 app.use( morgan( 'dev' ) );
-app.use( bodyParser.json() );
+
+// replaced body-parser.json() - deprecated ???
+app.use( express.json() );
 // used in requireSignIn method so it works
 app.use( cookieParser() );
 app.use( expressValidator() );
 
 
-// routes middleware
+// routes middleware app.use(), 1st is path, 2nd is module that manages it
 app.use( '/api', authRoutes );
 app.use( '/api', userRoutes );
 app.use( '/api', categoryRoutes );

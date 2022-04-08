@@ -17,10 +17,8 @@ exports.productById = function ( req, res, next, id ) {
                 });
             }
             req.product = product;
-            console.log('log de req.product:', req.product);
             next();
         });
-    console.log('log productById, findById req: ', req);
 };
 
 // CREATE METHOD
@@ -150,21 +148,14 @@ exports.remove = (req, res) => {
 };
 
 /**
- * @desc Show products sorted by most popular/sold and new products. This method returns all the products if no query is passed (if no params are sent).
- * @todo: by sell = /products?sortBy=sold&order=desc&limit=4
- * @todo: by arrival = /products?sortBy=createdAt&order=desc&limit=4
- * @category Array
- * @param {Array} array The array to process.
- * @param {number} [size=1] The length of each chunk
- * @returns {Array} Returns the new array of chunks.
- * @example
+ * @desc Show products sorted by most popular/sold and new products. This method returns all the products if no query is passed ( no params sent).
  */
 
 exports.list = ( ( req, res ) => {
     // if no order in query (url) returns ascending by default
     let order = req.query.order ? req.query.order : 'asc';
     let sortBy = req.query.sortBy ? req.query.sortBy : '_id';
-    let limit = req.query.limit ? req.query.limit : 20;
+    let limit = req.query.limit ? req.query.limit : 2;
 
     Product.find()
         // diselect product photo from search
@@ -174,9 +165,9 @@ exports.list = ( ( req, res ) => {
         .limit( limit )
         // executes the queries based on what is passed in the query (url)
         .exec( ( err, products ) => {
-            if ( err || !products || []) {
+            if ( err ) {
                 return res.status( 400 ).json( {
-                    message: 'No products found'
+                    error: errorHandler(err)
                 } );
             }
             res.send( products )

@@ -9,7 +9,6 @@ Router.get('/secret/:userId', requireSignIn, isAuth, isAdmin, (req, res) => {
     res.json({
         user: req.profile
     });
-    console.log('hi from response');
 });
 
 Router.param('userId', userById);
