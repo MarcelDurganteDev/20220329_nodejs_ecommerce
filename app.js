@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require( 'mongoose' );
 const morgan = require( 'morgan' );
 const cookieParser = require( 'cookie-parser' )
+const cors = require( 'cors' );
 const expressValidator = require('express-validator')
 const dotenv = require('dotenv');
 dotenv.config();
@@ -35,6 +36,8 @@ app.use( morgan( 'dev' ) );
 app.use( express.json() );
 // used in requireSignIn method so it works
 app.use( cookieParser() );
+app.use( cors() );
+
 app.use( expressValidator() );
 
 
