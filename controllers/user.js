@@ -13,3 +13,13 @@ exports.userById = (req, res, next, id) => {
         next();
     });
 };
+
+/**
+ * @desc: get User information 
+ */
+
+exports.readUser = ( req, res ) => {
+    req.profile.hashed_password = undefined;
+    req.profile.salt = undefined;
+    return res.json( req.profile );
+};
