@@ -1,6 +1,6 @@
 const express = require('express');
 const Router = express.Router();
-const { userById, readUser } = require('../controllers/user');
+const { userById, readUser, updateUser } = require('../controllers/user');
 const { requireSignIn, isAuth, isAdmin } = require('../controllers/auth');
 
 // with "isAuth" middleware one user cannot access other user profile, user needs to be currently authenticated user
@@ -12,6 +12,7 @@ Router.get('/secret/:userId', requireSignIn, isAuth, isAdmin, (req, res) => {
 } );
 
 Router.get('/user/:userId', readUser);
+Router.put('/user/:userId', requireSignIn, isAuth, isAdmin, updateUser);
 
 Router.param('userId', userById);
 
