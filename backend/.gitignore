@@ -125,3 +125,7 @@ dist
 
 # Visual Studio Code
 .vscode
+
+# File for personal reference
+
+.commentsPattern
