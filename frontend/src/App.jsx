@@ -1,3 +1,12 @@
-const App = () => (<div>Hi Marcel</div>)
+// import { BrowserRouter } from "react-router-dom";
 
-export default App;
+// const App = () => {
+//     return (
+//         <BrowserRouter>
+//             <Signin />
+//             <Signout />
+//         </BrowserRouter>
+//     );
+// }
+
+// export default App;
