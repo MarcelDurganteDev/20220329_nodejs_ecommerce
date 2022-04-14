@@ -1,21 +1,21 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
-const isActive = ( history, path ) => {
-    if ( history.location.pathname === path ) {
+const isActive = ( location, path ) => {
+    if ( location.pathname === path ) {
         return { color: '#ff9900' };
     } else {
         return { color: '#ffffff' };
     }
 }
 // these props 'history' are coming from react-router-dom
-const Menu = ({history}) => (
+const Menu = ( {location}) => (
     <div>
         <ul className="nav nav-tabs bg-primary">
             <li className="nav-item">
                 <Link
                     className="nav-link"
-                    style={isActive(history, '/')}
+                    style={isActive(location, '/')}
                     to="/"
                 >
                     Home
@@ -24,7 +24,7 @@ const Menu = ({history}) => (
             <li className="nav-item">
                 <Link
                     className="nav-link"
-                    style={isActive(history, '/signin')}
+                    style={isActive(location, '/signin')}
                     to="/signin"
                 >
                     Sign In
@@ -33,7 +33,7 @@ const Menu = ({history}) => (
             <li className="nav-item">
                 <Link
                     className="nav-link"
-                    style={isActive(history, '/signup')}
+                    style={isActive(location, '/signup')}
                     to="/signup"
                 >
                     Sign Up

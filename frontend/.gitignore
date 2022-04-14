@@ -125,6 +125,7 @@ dist
 
 # Visual Studio Code
 .vscode
+.vscode/
 
 # File for personal reference
 
