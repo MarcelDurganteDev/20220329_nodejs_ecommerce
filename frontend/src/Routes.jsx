@@ -3,13 +3,10 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Signin from './user/Signin';
 import Signup from './user/Signup';
 import Home from './core/Home';
-import Menu from './core/Menu';
-
 
 const Routes = ( ) => {
     return (
         <BrowserRouter>
-            <Menu />
             {/* A <Switch> looks through its children <Route>s and
                 renders the first one that matches the current URL. */}
             <Switch>

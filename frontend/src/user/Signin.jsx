@@ -1,10 +1,11 @@
-import React from 'react'
+import React from 'react';
+import Layout from '../core/Layout';
 
 const Signin = () => {
     return (
-        <div>
-            <div>Sign In</div>
-        </div>
+        <Layout title="Sign In Page" description="Sign In Page">
+            ...
+        </Layout>
     );
 };
 export default Signin;
