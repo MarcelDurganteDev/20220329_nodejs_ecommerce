@@ -1,23 +1,48 @@
 import React, { useState } from 'react';
 import Layout from '../core/Layout';
+import { API } from '../config'
 
 const Signup = () => {
-    const [inputValues, setInputValues] = useState({
+    const [values, setValues] = useState({
         firstName: '',
         lastName: '',
         email: '',
         password: '',
         error: '',
         success: false
-    });
+    } );
+    
+    const { firstName, lastName, email, password } = values;
 
-    /**
-     * @desc: A higher-order function is one which either a) takes a function as an argument or b) returns a function.
-     */
+    const signup = ( user ) => {
+        console.log(user);
+        //send data to backend
+        fetch( `${API}/signup`, {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify( user )
+        } )
+        .then( response => {
+            return response.json()
+        } )
+        .catch( err => {
+            console.log(err)
+        })
+    }
+    
+    const handleChange = e => {
+        const { name, value } = e.target;
+        setValues( { ...values, error: false, [name]: value } );
+        
+    };
 
-    const handleChange = event => {
-        const { name, value } = event.target;
-        setInputValues({ ...inputValues, error: false, [name]: value });
+    const handleSubmit = e => {
+        e.preventDefault();
+        // javascript object will send to signup function as 'user' object
+        signup({firstName, lastName, email, password});
     };
 
     const signUpForm = () => (
@@ -58,18 +83,21 @@ const Signup = () => {
                     className="form-control"
                 />
             </div>
-            <button className="btn btn-primary">Submit</button>
+            <button onClick={handleSubmit} type="submit" className="btn btn-primary">
+                Submit
+            </button>
         </form>
     );
 
     return (
+        
         <Layout
             title="Sign Up Page"
             description="Sign Up Page"
             className="container col-md-8 offset-md-2"
         >
             {signUpForm()}
-            {JSON.stringify(inputValues)}
+            {JSON.stringify(values)}
         </Layout>
     );
 };
